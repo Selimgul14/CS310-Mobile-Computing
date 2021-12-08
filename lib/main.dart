@@ -16,6 +16,7 @@ void main(){
       "/setnick": (context) => SetNick(),
       "/welcome": (context) => WelcomeScreen(),
     },
+    debugShowCheckedModeBanner: false,
 
 
 
