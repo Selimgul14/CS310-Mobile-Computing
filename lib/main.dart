@@ -9,23 +9,76 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:project/services/auth.dart';
+import 'package:project/routes/welcome_nofb.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
-void main(){
-  runApp(MaterialApp(
-    home: WelcomeScreen(),
-    initialRoute: "/walkthrough",
-    routes: {
-      "/walkthrough": (context) => OnboardingPage(),
-      "/login": (context) => Login(),
-      "/signup": (context) => SignUp(),
-      "/setnick": (context) => SetNick(),
-      "/welcome": (context) => WelcomeScreen(),
-    },
-    debugShowCheckedModeBanner: false,
+int? initScreen;
 
-
-
-
-  ));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = (await prefs.getInt("initScreen"));
+  await prefs.setInt("initScreen", 1);
+  print('initScreen ${initScreen}');
+  runApp(MyApp());
 }
+
+class MyApp extends StatelessWidget {
+
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot){
+        if(snapshot.hasError){
+          print("Cannot connect to firebase: " + snapshot.error.toString());
+          return MaterialApp(
+            home: WelcomeViewNoFB(),
+          );
+        }
+        if(snapshot.connectionState == ConnectionState.done){
+          print("Firebase connected");
+          return AppBase();
+        }
+        return MaterialApp(
+          home: WelcomeScreen(),
+        );
+      }
+    );
+  }
+}
+
+class AppBase extends StatelessWidget {
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<User?>.value(
+      value: AuthService().user,
+      initialData: null,
+      child: MaterialApp(
+        navigatorObservers: <NavigatorObserver>[observer],
+        home: WelcomeScreen(),
+        initialRoute: initScreen == 0 || initScreen == null ? "/walkthrough" : "Welcome",
+        routes: {
+          "/walkthrough": (context) => OnboardingPage(),
+          "/login": (context) => Login(),
+          "/signup": (context) => SignUp(),
+          "/setnick": (context) => SetNick(),
+          "/welcome": (context) => WelcomeScreen(),
+        },
+        debugShowCheckedModeBanner: false,
+      ),
+    );
+  }
+}
+
+
+
+

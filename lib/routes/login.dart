@@ -1,9 +1,16 @@
 import 'package:project/routes/drawer.dart';
+import 'package:project/services/auth.dart';
 import 'package:project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:project/utils/styles.dart';
 import 'package:project/utils/dimensions.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:project/services/auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 
 class Login extends StatefulWidget {
@@ -14,8 +21,30 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  String _message = '';
+  int attemptCount = 0;
+  String mail = '';
+  String pass = '';
+  final _formKey = GlobalKey<FormState>();
+
+  AuthService auth = AuthService();
+
+  void setmessage(String msg){
+    setState(() {
+      _message = msg;
+    });
+  }
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,17 +71,39 @@ class _LoginState extends State<Login> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
+
                   decoration: InputDecoration(
                     labelText: 'Email Address',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
                   ),
+                  validator: (value){
+                    if (value != null){
+                      if(value.isEmpty){
+                        return "Please enter your e-mail";
+                      }
+                      if(!EmailValidator.validate(value)){
+                        return "The e-mail address is not valid";
+                      }
+                    }
+                    else {
+                      return "Please enter your e-mail";
+                    }
+                    return null;
+                  },
+                  onSaved: (String? value) {
+                    if(value != null){
+                      mail = value;
+                    }
+                  }
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Password',
@@ -60,6 +111,24 @@ class _LoginState extends State<Login> {
                     prefixIcon: Icon(Icons.lock),
                     suffixIcon: Icon(Icons.remove_red_eye),
                   ),
+
+                  validator: (value) {
+                    if(value != null){
+                      if (value.isEmpty) {
+                        return "Please enter your password";
+                      }
+                      if (value.length < 8) {
+                        return "Password must be at least 8 characters";
+                      }
+                    }
+                    else {
+                      return "Please enter your password";
+                    }
+                    return null;
+                  },
+                  onSaved: (String? value) {
+                    pass = value ?? '';
+                  }
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -89,7 +158,14 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () => print("Signed up successfully."),
+                    onPressed: () {
+                      if(_formKey.currentState!.validate()){
+                        _formKey.currentState!.save();
+                        auth.loginWithMailAndPass(mail, pass);
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Logging in")));
+                      }
+                    },
                     color: AppColors.buttonColor1,
                     child: Text(
                       'Log In',
