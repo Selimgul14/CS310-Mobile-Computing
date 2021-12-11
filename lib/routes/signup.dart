@@ -1,21 +1,50 @@
+import 'package:firebase_analytics/observer.dart';
 import 'package:project/routes/drawer.dart';
+import 'package:project/services/analytics.dart';
+import 'package:project/services/auth.dart';
 import 'package:project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:project/utils/styles.dart';
+import 'package:project/utils/dimensions.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:project/routes/setnick.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:project/services/auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:project/routes/bottomNavigation.dart';
 
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  SignUp({Key, key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _SignUpState createState() => _SignUpState();
 }
 
+
+
 class _SignUpState extends State<SignUp> {
+  String _message = '';
+  int attemptCount = 0;
+  String mail = '';
+  String pass = '';
+  final _formKey = GlobalKey<FormState>();
+
+  AuthService auth = AuthService();
+
+  void setmessage(String msg){
+    setState(() {
+      _message = msg;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    setCurrentScreen(widget.analytics, "/signup", "signup.dart");
     return Scaffold(
       appBar: AppBar(
         title: Text(

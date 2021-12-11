@@ -1,10 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/utils/styles.dart';
 import 'package:project/utils/themebutton.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:project/services/analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:provider/provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key, key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  String _message = '';
+
+  void setMessage(String msg) {
+    setState(() {
+      _message = msg;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -13,7 +39,8 @@ class WelcomeScreen extends StatelessWidget {
             Positioned.fill(
               child: Opacity(
                 opacity: 0.5,
-                child: Image.network('https://www.sabanciuniv.edu/sites/default/files/zoom-bg/university-center.png',
+                child: Image.network(
+                    'https://www.sabanciuniv.edu/sites/default/files/zoom-bg/university-center.png',
                     fit: BoxFit.cover),
               ),
             ),
@@ -37,8 +64,8 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Text('CS310 News Application',
-                      textAlign: TextAlign.center,
-                      style: welcomePageTextStyle,
+                    textAlign: TextAlign.center,
+                    style: welcomePageTextStyle,
                   ),
                   SizedBox(height: 20),
                   Text(

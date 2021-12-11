@@ -28,6 +28,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
           return AppBase();
         }
         return MaterialApp(
-          home: WelcomeScreen(),
+          home: WelcomeScreen(observer: observer, analytics: analytics),
         );
       }
     );
@@ -64,14 +66,15 @@ class AppBase extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         navigatorObservers: <NavigatorObserver>[observer],
-        home: WelcomeScreen(),
+        home: WelcomeScreen(observer: observer, analytics: analytics),
         initialRoute: initScreen == 0 || initScreen == null ? "/walkthrough" : "Welcome",
         routes: {
           "/walkthrough": (context) => OnboardingPage(),
-          "/login": (context) => Login(),
-          "/signup": (context) => SignUp(),
+          "/login": (context) => Login(observer: observer, analytics: analytics),
+          "/signup": (context) => SignUp(observer: observer, analytics: analytics),
           "/setnick": (context) => SetNick(),
-          "/welcome": (context) => WelcomeScreen(),
+          "/welcome": (context) => WelcomeScreen(observer: observer, analytics: analytics),
+          "/welcomeNoFB": (context) => WelcomeViewNoFB(),
         },
         debugShowCheckedModeBanner: false,
       ),

@@ -1,4 +1,5 @@
 import 'package:project/routes/drawer.dart';
+import 'package:project/services/analytics.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:project/services/auth.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-
+import 'package:project/routes/bottomNavigation.dart';
+import 'package:firebase_analytics/observer.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  Login({Key, key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _LoginState createState() => _LoginState();
@@ -44,7 +49,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
-
+    setCurrentScreen(widget.analytics, "/login", "login.dart");
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -56,6 +61,7 @@ class _LoginState extends State<Login> {
         elevation: 0.0,
       ),
       drawer: MyDrawer(),
+      bottomNavigationBar: bottomNavigationBar(),
       body: Padding(
         padding: Dimen.regularPadding,
         child: Center(
@@ -77,7 +83,8 @@ class _LoginState extends State<Login> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
                   ),
-                  validator: (value){
+                  validator: (value)
+                  {
                     if (value != null){
                       if(value.isEmpty){
                         return "Please enter your e-mail";
@@ -160,6 +167,8 @@ class _LoginState extends State<Login> {
                   child: MaterialButton(
                     onPressed: () {
                       if(_formKey.currentState!.validate()){
+                        print("Email: $mail");
+                        print("Password: $pass");
                         _formKey.currentState!.save();
                         auth.loginWithMailAndPass(mail, pass);
 
@@ -179,7 +188,10 @@ class _LoginState extends State<Login> {
                 SignInButton(
                   Buttons.Google,
                   text: "Log in with Google",
-                  onPressed: () {},
+                  onPressed: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                    provider.googleLogin();
+                  },
                   elevation: 0.0,
                 ),
                 SizedBox(
