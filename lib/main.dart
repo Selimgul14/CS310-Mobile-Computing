@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:project/routes/login.dart';
 import 'package:project/routes/signup.dart';
@@ -27,14 +28,18 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
 
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  Future<void> _initializeFirebase() async {
+    await Firebase.initializeApp();
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  }
+
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _initialization,
+      future: _initializeFirebase(),
       builder: (context, snapshot){
         if(snapshot.hasError){
           print("Cannot connect to firebase: " + snapshot.error.toString());

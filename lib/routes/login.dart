@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:project/routes/drawer.dart';
 import 'package:project/services/analytics.dart';
 import 'package:project/services/auth.dart';
@@ -220,7 +221,8 @@ class _LoginState extends State<Login> {
                 SignInButton(
                   Buttons.Facebook,
                   text: "Log in with Facebook",
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   elevation: 0.0,
                 ),
                 Divider(
