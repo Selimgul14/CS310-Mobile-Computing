@@ -29,6 +29,7 @@ class SignUp extends StatefulWidget {
 
 
 class _SignUpState extends State<SignUp> {
+  bool isLoading = false;
   String _message = '';
   int attemptCount = 0;
   String mail = '';
@@ -115,8 +116,7 @@ class _SignUpState extends State<SignUp> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     color: AppColors.buttonColor1,
                     child: Text(
                       'Sign Up',
@@ -130,7 +130,23 @@ class _SignUpState extends State<SignUp> {
                 SignInButton(
                   Buttons.Google,
                   text: "Sign up with Google",
-                  onPressed: () {},
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    AuthService service = new AuthService();
+                    try {
+                      await service.signInwithGoogle();
+                      Navigator.pushNamedAndRemoveUntil(context, "welcome", (route) => false);
+                    } catch(e){
+                      if(e is FirebaseAuthException){
+                        print(e.message!);
+                      }
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   elevation: 0.0,
                 ),
                 SizedBox(

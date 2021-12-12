@@ -5,11 +5,15 @@ import 'package:project/utils/colors.dart';
 import 'package:project/utils/dimensions.dart';
 import 'package:project/utils/styles.dart';
 import 'package:project/routes/welcomepage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class OnboardingPage extends StatelessWidget {
+  late final FirebaseAnalytics analytics;
   final _controller = OnboardingController();
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics().setCurrentScreen(screenName: "/walkthrough", screenClassOverride: "onboarding_page.dart");
     return Scaffold(
       body: SafeArea(
         child: Stack(

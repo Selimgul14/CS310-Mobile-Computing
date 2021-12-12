@@ -4,6 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
 
   User? _userFormFirebase(User? user){
     return user ?? null;
@@ -59,28 +61,25 @@ class AuthService{
     }
   }
 
-}
-
-class GoogleSignInProvider extends ChangeNotifier{
-  final googleSignIn = GoogleSignIn();
-
-  GoogleSignInAccount? _user;
-
-  GoogleSignInAccount get user => _user!;
-
-  Future googleLogin() async {
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
-
-    final googleAuth = await googleUser.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    notifyListeners();
+  Future<String?> signInwithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+      await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      throw e;
+    }
   }
 
+  Future<void> signOutFromGoogle() async{
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+  }
 }

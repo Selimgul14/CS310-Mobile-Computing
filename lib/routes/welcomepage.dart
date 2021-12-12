@@ -19,7 +19,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String _message = '';
-
   void setMessage(String msg) {
     setState(() {
       _message = msg;
@@ -30,8 +29,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
-
+    FirebaseAnalytics().setCurrentScreen(screenName: "/welcome", screenClassOverride: "welcomepage.dart");
     return Scaffold(
+
       body: Container(
         color: Colors.black,
         child: Stack(

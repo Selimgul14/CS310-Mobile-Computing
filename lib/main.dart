@@ -67,12 +67,11 @@ class AppBase extends StatelessWidget {
       child: MaterialApp(
         navigatorObservers: <NavigatorObserver>[observer],
         home: WelcomeScreen(observer: observer, analytics: analytics),
-        initialRoute: initScreen == 0 || initScreen == null ? "/walkthrough" : "Welcome",
+        //initialRoute: initScreen == 0 || initScreen == null ? "/walkthrough" : "Welcome",
         routes: {
           "/walkthrough": (context) => OnboardingPage(),
           "/login": (context) => Login(observer: observer, analytics: analytics),
           "/signup": (context) => SignUp(observer: observer, analytics: analytics),
-          "/setnick": (context) => SetNick(),
           "/welcome": (context) => WelcomeScreen(observer: observer, analytics: analytics),
           "/welcomeNoFB": (context) => WelcomeViewNoFB(),
         },

@@ -26,7 +26,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
+  bool isLoading = false;
   String _message = '';
   int attemptCount = 0;
   String mail = '';
@@ -166,16 +166,23 @@ class _LoginState extends State<Login> {
                   ),
                   child: MaterialButton(
                     onPressed: () {
-                      if(_formKey.currentState!.validate()){
+                      setLogEvent(widget.analytics);
+                      AuthService service = new AuthService();
+                      try {
+                        _formKey.currentState!.save();
+                        service.loginWithMailAndPass(mail, pass);
                         print("Email: $mail");
                         print("Password: $pass");
-                        _formKey.currentState!.save();
-                        auth.loginWithMailAndPass(mail, pass);
-
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Logging in")));
+                        Navigator.pushNamedAndRemoveUntil(context, "welcome", (route) => false);
+                      } catch(e){
+                        if(e is FirebaseAuthException){
+                          print(e.message!);
+                        }
                       }
                     },
+
                     color: AppColors.buttonColor1,
+
                     child: Text(
                       'Log In',
                       style: ButtonTextStyle,
@@ -188,9 +195,22 @@ class _LoginState extends State<Login> {
                 SignInButton(
                   Buttons.Google,
                   text: "Log in with Google",
-                  onPressed: () {
-                    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-                    provider.googleLogin();
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    AuthService service = new AuthService();
+                    try {
+                      await service.signInwithGoogle();
+                      Navigator.pushNamedAndRemoveUntil(context, "welcome", (route) => false);
+                    } catch(e){
+                      if(e is FirebaseAuthException){
+                        print(e.message!);
+                      }
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
                   },
                   elevation: 0.0,
                 ),
