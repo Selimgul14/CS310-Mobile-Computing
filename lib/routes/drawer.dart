@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:project/routes/feed.dart';
 import 'package:project/routes/profile_page.dart';
 import "package:project/utils/colors.dart";
 import 'package:project/utils/dimensions.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 class MyDrawer extends StatelessWidget {
   late final FirebaseAnalytics analytics;
   late final FirebaseAnalyticsObserver observer;
+
   final padding = EdgeInsets.symmetric(horizontal: 10);
   @override
   Widget build(BuildContext context) {
@@ -49,15 +51,21 @@ class MyDrawer extends StatelessWidget {
             Divider(color: Colors.white70),
             const SizedBox(height: 24),
             buildMenuItem(
+              text: "Home",
+              icon: Icons.home,
+              onClicked: ( )=> selectedItem(context, 4),
+            ),
+            const SizedBox(height: 16),
+            buildMenuItem(
               text: "Profile",
               icon: Icons.account_circle,
-              onClicked: () => selectedItem(context, 4),
+              onClicked: () => selectedItem(context, 5),
             ),
             const SizedBox(height: 16),
             buildMenuItem(
               text: "Sign Out",
               icon: Icons.logout,
-              onClicked: () => selectedItem(context, 5),
+              onClicked: () => selectedItem(context, 6),
             ),
           ],
         ),
@@ -82,7 +90,8 @@ class MyDrawer extends StatelessWidget {
     switch(index){
       case 4:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfilePage(analytics: analytics, observer: observer)
+            builder: (context) => FeedView(),
+
         ));
     }
   }

@@ -30,7 +30,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Icons.arrow_back,
             color: AppColors.buttonColor1,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/profile_page");
+          },
         ),
         actions: [],
       ),
@@ -71,7 +73,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                "https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=712&q=80",
+                                "",
                               ))),
                     ),
                     Positioned(
@@ -99,12 +101,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "lorem ipsum", false),
-              buildTextField("E-mail", "placeholder@gmail.com", false),
+              buildTextField("Full Name", "name surname", false),
+              buildTextField("E-mail", "placeholder@sabanciuniv.edu", false),
               buildTextField("Password", "********", true),
               buildTextField("Location", "Istanbul, Turkey", false),
-              buildTextField("Bio", "bio placeholder", false),
-              buildTextField("Interests", "interests placeholder", false),
               SizedBox(
                 height: 35,
               ),
@@ -112,10 +112,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlineButton(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    padding: EdgeInsets.symmetric(horizontal: 60),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/profile_page");
+                    },
                     child: Text("CANCEL",
                         style: SubTextStyle
                     ),
@@ -123,7 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   RaisedButton(
                     onPressed: () {},
                     color: AppColors.buttonColor1,
-                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    padding: EdgeInsets.symmetric(horizontal: 60),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
@@ -161,7 +163,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   )
                 : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
+            contentPadding: EdgeInsets.only(bottom: 1),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,

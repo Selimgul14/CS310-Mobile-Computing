@@ -59,7 +59,14 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 4),
           Text(
             user.username,
-            style: TextStyle(color: Colors.grey),
+            style: SubTextStyle,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            user.location,
+            style: SubTextStyle,
           )
         ],
       );

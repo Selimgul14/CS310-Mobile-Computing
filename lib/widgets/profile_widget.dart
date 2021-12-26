@@ -39,10 +39,11 @@ class ProfileWidget extends StatelessWidget {
         color: Colors.transparent,
         child: Ink.image(
           image: image,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           width: 128,
           height: 128,
           child: InkWell(onTap: onClicked),
+
         ),
       ),
     );

@@ -3,6 +3,7 @@ class User {
   final String name;
   final String username;
   final String about;
+  final String location;
 
 
   const User({
@@ -10,6 +11,7 @@ class User {
     required this.name,
     required this.username,
     required this.about,
+    required this.location,
 
   });
 }
@@ -17,11 +19,11 @@ class User {
 class UserInstance {
   static const myUser = User(
     imagePath:
-    'https://i.imgur.com/BJes1uq.jpeg',
-    name: 'Onat Uzunyayla',
-    username: 'onatuzunyayla',
+    'https://www.sabanciuniv.edu/sites/default/files/sabanci_universitesi_logo_rgb.jpg',
+    name: 'Name Surname',
+    username: 'namesurname',
     about:
     'Independent journalist writing on topics of economy',
-
+    location: "Istanbul, Turkey",
   );
 }

@@ -97,16 +97,6 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm Password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.check),
-                    suffixIcon: Icon(Icons.remove_red_eye),
-                  ),
-                ),
 
                 SizedBox(
                   height: 15,
@@ -154,14 +144,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 SizedBox(
                   height: 15,
-                ),
-                SignInButton(
-                  Buttons.Facebook,
-                  text: "Sign up with Facebook",
-                  onPressed: () {
-
-                  },
-                  elevation: 0.0,
                 ),
                 Divider(
                   color: Colors.black,

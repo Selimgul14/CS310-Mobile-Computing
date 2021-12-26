@@ -44,7 +44,7 @@ class _PostTitleAndSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(title, style: TitleTextStyle),
+          Text(title, style: TitleTextStyle, textAlign: TextAlign.center),
           Text(summary, style: SubTextStyle),
         ],
       ),
@@ -105,6 +105,7 @@ class _UserImage extends StatelessWidget {
       child: CircleAvatar(
         backgroundImage: AssetImage(
             DemoValues.userImage,
+
 
         ),
       ),

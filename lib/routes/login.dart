@@ -233,14 +233,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 15,
                 ),
-                SignInButton(
-                  Buttons.Facebook,
-                  text: "Log in with Facebook",
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/edit_profile");
-                  },
-                  elevation: 0.0,
-                ),
+
                 Divider(
                   color: Colors.black,
                   height: 30,
