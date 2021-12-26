@@ -1,6 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:project/routes/login.dart';
+import 'package:project/routes/profile_page.dart';
 import 'package:project/routes/signup.dart';
 import 'package:project/routes/welcomepage.dart';
 import 'package:project/routes/setnick.dart';
@@ -13,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:project/services/auth.dart';
 import 'package:project/routes/welcome_nofb.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project/routes/feed.dart';
+import 'package:project/routes/edit_profile.dart';
 
 
 int? initScreen;
@@ -79,6 +82,9 @@ class AppBase extends StatelessWidget {
           "/signup": (context) => SignUp(observer: observer, analytics: analytics),
           "/welcome": (context) => WelcomeScreen(observer: observer, analytics: analytics),
           "/welcomeNoFB": (context) => WelcomeViewNoFB(),
+          "/feed": (context) => FeedView(),
+          "/edit_profile": (context) => EditProfilePage(),
+          "/profile_page": (context) => ProfilePage(analytics: analytics, observer: observer),
         },
         debugShowCheckedModeBanner: false,
       ),

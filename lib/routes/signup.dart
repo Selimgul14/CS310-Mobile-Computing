@@ -43,6 +43,9 @@ class _SignUpState extends State<SignUp> {
       _message = msg;
     });
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     setCurrentScreen(widget.analytics, "/signup", "signup.dart");
@@ -155,7 +158,9 @@ class _SignUpState extends State<SignUp> {
                 SignInButton(
                   Buttons.Facebook,
                   text: "Sign up with Facebook",
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                   elevation: 0.0,
                 ),
                 Divider(

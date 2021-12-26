@@ -7,6 +7,7 @@ import 'package:project/services/analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:provider/provider.dart';
 
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key, key, required this.analytics, required this.observer}) : super(key: key);
 
@@ -39,8 +40,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Positioned.fill(
               child: Opacity(
                 opacity: 0.5,
-                child: Image.network(
-                    'https://www.sabanciuniv.edu/sites/default/files/zoom-bg/university-center.png',
+                child: Image.asset(
+                    'assets/images/university-center.png',
                     fit: BoxFit.cover),
               ),
             ),
@@ -56,8 +57,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         height: 180,
                         color: Colors.white,
                         alignment: Alignment.center,
-                        child: Image.network(
-                            'https://www.sabanciuniv.edu/sites/default/files/sabanci_universitesi_logo_rgb.jpg',
+                        child: Image.asset(
+                            "assets/images/logo.jpeg",
                             fit: BoxFit.fill),
                       ),
                     ),
