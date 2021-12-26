@@ -12,6 +12,12 @@ final HeaderTextStyle = GoogleFonts.montserrat(
   color: AppColors.buttonColor1,
 );
 
+final TitleTextStyle = GoogleFonts.montserrat(
+  fontSize: 25,
+  fontWeight: FontWeight.w700,
+  color: AppColors.secondaryColor,
+);
+
 final ButtonTextStyle = GoogleFonts.montserrat(
   fontSize: 20,
   color: Colors.white,
@@ -36,4 +42,8 @@ final welcomePageTextStyle = TextStyle(
     color: Colors.white,
     fontSize: 45,
     fontWeight: FontWeight.bold,
+);
+
+final drawerTextStyle = GoogleFonts.montserrat(
+  color: Colors.white
 );
