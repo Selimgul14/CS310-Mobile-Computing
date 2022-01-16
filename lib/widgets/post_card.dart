@@ -45,7 +45,7 @@ class _PostTitleAndSummary extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Text(title, style: TitleTextStyle, textAlign: TextAlign.center),
-          Text(summary, style: SubTextStyle),
+          Text(summary, style: SubTextStyle, textAlign: TextAlign.center),
         ],
       ),
     );

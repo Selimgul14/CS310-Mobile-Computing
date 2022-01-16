@@ -94,6 +94,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Navigator.pushNamed(context, "/login");
                     },
                   ),
+                  SizedBox(height: 60),
+                  ThemeButton(
+                    label: "Continue without logging in",
+                    labelColor: Colors.white,
+                    borderColor: Colors.white,
+                    borderWidth: 4,
+                    highlight: Colors.blueGrey,
+                    color: Colors.transparent,
+                    onClick: (){
+                      Navigator.pushNamed(context, "/feed");
+                    }
+                  ),
                 ],
               ),
             )
