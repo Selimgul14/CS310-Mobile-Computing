@@ -2,6 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:project/routes/login.dart';
 import 'package:project/routes/profile_page.dart';
+import 'package:project/routes/reddit.dart';
 import 'package:project/routes/signup.dart';
 import 'package:project/routes/welcomepage.dart';
 import 'package:project/routes/setnick.dart';

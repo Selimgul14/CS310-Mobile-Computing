@@ -59,7 +59,9 @@ class MyDrawer extends StatelessWidget {
             buildMenuItem(
               text: "Profile",
               icon: Icons.account_circle,
-              onClicked: () => selectedItem(context, 5),
+              onClicked: () {
+                Navigator.pushNamed(context, "/profile_page");
+              },
             ),
             const SizedBox(height: 16),
             buildMenuItem(

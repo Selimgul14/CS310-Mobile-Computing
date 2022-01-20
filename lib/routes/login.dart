@@ -64,19 +64,6 @@ class _LoginState extends State<Login> {
         elevation: 0.0,
       ),
       drawer: MyDrawer(),
-      bottomNavigationBar: bottomNavigationBar(_currentIndex, onTabChange: (index){
-        _currentIndex = index;
-        setState(() {
-          if(_currentIndex == 3 && _currentIndex == lastIndex){}
-          lastIndex = index;
-          if(_currentIndex == 0){
-            Navigator.pushNamed(context, "/feed");
-          }
-          if(_currentIndex == 2){
-            Navigator.pushNamed(context, "/profile_page");
-          }
-        });
-      },),
       body: Padding(
         padding: Dimen.regularPadding,
         child: Center(
@@ -229,6 +216,7 @@ class _LoginState extends State<Login> {
                     Navigator.of(context).pop("/welcome");
                   },
                   elevation: 0.0,
+
                 ),
                 SizedBox(
                   height: 15,

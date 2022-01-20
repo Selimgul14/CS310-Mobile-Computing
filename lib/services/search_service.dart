@@ -7,6 +7,7 @@ class CategorySeach extends SearchDelegate<String>{
     "World",
     "Europe",
     "Finance",
+    "Oguzhan"
   ];
   final recentCategories = [
     "Sports",
